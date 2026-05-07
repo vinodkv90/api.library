@@ -7,20 +7,25 @@ import { UsersModule } from './users/users.module';
 import { AuthorsModule } from './authors/authors.module';
 import { TransactionsModule } from './transactions/transactions.module';
 
-TypeOrmModule.forRoot({
-  type: 'postgres',
-  host: 'localhost',
-  port: 5433,
-  username: 'postegres',
-  password: 'root',
-  database: 'library_mangement_system',
-  autoLoadEntities: true,
-  synchronize: true, // disable in production
-});
-
 @Module({
   controllers: [AppController],
   providers: [AppService],
-  imports: [BooksModule, UsersModule, AuthorsModule, TransactionsModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5433,
+      username: 'postgres',
+      password: 'root',
+      database: 'library_mangement_system',
+      autoLoadEntities: true,
+      synchronize: true, // disable in production
+    }),
+    BooksModule,
+    UsersModule,
+    AuthorsModule,
+    TransactionsModule,
+    BooksModule,
+  ],
 })
 export class AppModule {}
