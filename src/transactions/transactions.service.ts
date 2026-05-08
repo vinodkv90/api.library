@@ -1,19 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  constructor(
+    @InjectRepository(Transaction)
+    private repo: Repository<Transaction>,
+  ) {}
+
+  async borrowBook(data: CreateTransactionDto) {
+    const transaction = this.repo.create({
+      ...data,
+      borrowedAt: new Date(),
+    });
+
+    return await this.repo.save(transaction);
   }
 
-  findAll() {
-    return `This action returns all transactions`;
+  async findAll() {
+    return await this.repo.find({
+      relations: ['user', 'book'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+  async returnBook(id: number) {
+    const transaction = await this.repo.findOne({
+      where: { id },
+    });
+
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found');
+    }
+
+    transaction.returnedAt = new Date();
+
+    return await this.repo.save(transaction);
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
