@@ -23,7 +23,7 @@ export class Transaction {
   @Column({ type: 'date' })
   borrowedAt: Date;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   returnedAt: Date;
 
   // Relation with user
