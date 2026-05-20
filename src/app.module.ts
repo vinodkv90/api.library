@@ -8,6 +8,8 @@ import { AuthorsModule } from './authors/authors.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
+import { RegisterModule } from './register/register.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [AppController],
@@ -30,6 +32,7 @@ import { CommonModule } from './common/common.module';
     BooksModule,
     AuthModule,
     CommonModule,
+    RegisterModule,
   ],
 })
 export class AppModule {}
