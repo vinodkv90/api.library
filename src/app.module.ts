@@ -2,13 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
-import { AuthorsModule } from './authors/authors.module';
-import { TransactionsModule } from './transactions/transactions.module';
-import { AuthModule } from './auth/auth.module';
-import { CommonModule } from './common/common.module';
-import { RegisterModule } from './register/register.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -25,14 +19,8 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
       synchronize: true, // disable in production
     }),
-    BooksModule,
     UsersModule,
-    AuthorsModule,
-    TransactionsModule,
-    BooksModule,
     AuthModule,
-    CommonModule,
-    RegisterModule,
   ],
 })
 export class AppModule {}

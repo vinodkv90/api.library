@@ -1,5 +1,10 @@
 import { IsString } from 'class-validator';
 
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 export class CreateUserDto {
   @IsString()
   name: string;
@@ -11,7 +16,7 @@ export class CreateUserDto {
   phone: string;
 
   @IsString()
-  gender: string;
+  gender: Gender;
 
   @IsString()
   password: string;
